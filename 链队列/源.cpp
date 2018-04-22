@@ -62,10 +62,10 @@ LinkQueue<T>::~LinkQueue() //析构函数的实现
 template<class T>
 void LinkQueue<T>::EnQueue(T x) //入队函数的实现
 {
-	rear->next = new Node<T>;
-	rear = rear->next;
-	rear->data = x;
-	rear->next = NULL;
+	rear->next = new Node<T>;//①	令指针rear->next指向申请的Node型堆空间。
+	rear = rear->next;//②	令rear指向新的节点。
+	rear->data = x;//③	初始化新节点中的data数据。
+	rear->next = NULL;//④	将新节点中的next指针置空。
 }
 
 template<class T>
@@ -73,12 +73,12 @@ T LinkQueue<T>::DeQueue() //出队函数的实现
 {
 	Node<T> *p = front->next;
 	if (!p)
-		throw"下溢";
-	front->next = p->next;
-	T x = p->data;
-	delete p;
+		throw"下溢";//②	（若p为空则抛出错误信息“下溢”）原队头元素出列。
+	front->next = p->next;//①	新建指针p使其指向front->next。
+	T x = p->data;//③	将队头数据暂存到T型变量x中。
+	delete p;//④	释放原队列队头元素。
 	if (!front->next)
-		rear = front;
+		rear = front;//⑤	若队列变为空队，修改队尾指针。
 	return x;
 }
 
